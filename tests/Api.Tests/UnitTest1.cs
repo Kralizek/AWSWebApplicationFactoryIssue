@@ -1,15 +1,20 @@
-﻿namespace Api.Tests;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
+
+namespace Api.Tests;
 
 public class Tests
 {
-    [SetUp]
-    public void Setup()
-    {
-    }
-
     [Test]
-    public void Test1()
+    public async Task Test1()
     {
-        Assert.Pass();
+        WebApplicationFactory<Program> factory = new WebApplicationFactory<Program>();
+
+        var http = factory.CreateDefaultClient();
+
+        var response = await http.GetAsync("/weatherforecast");
+
+        response.EnsureSuccessStatusCode();
     }
 }
